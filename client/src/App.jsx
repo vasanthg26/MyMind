@@ -55,7 +55,7 @@ export default function App() {
             onShowTaskInput={() => setShowTaskInput(true)}
           />
         )}
-        {activePage === 'knowledge' && (
+        {activePage === 'kb' && (
           <KBPage />
         )}
       </main>
