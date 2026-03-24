@@ -230,13 +230,13 @@ async function handle(message, context) {
   if (lower.startsWith('summary ')) return summaryCluster(body.slice(8).trim());
 
   // Auto-detect URL paste
-  if (/^https?:\/\//.test(raw)) return addUrl(raw);
+  if (/^https?:\/\//.test(body)) return addUrl(body);
 
   // Auto-detect code snippet
-  if (/```[\s\S]*```/.test(raw)) return addNote(raw);
+  if (/```[\s\S]*```/.test(body)) return addNote(body);
 
   // Auto-detect long text
-  if (raw.length > 300) return addNote(raw);
+  if (body.length > 300) return addNote(body);
 
   return { type: 'kb_unknown', display: `  ✗ unknown kb command\n  try: /kb add <url|text>, /kb search <query>` };
 }
