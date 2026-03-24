@@ -14,8 +14,8 @@ async function route(message, context = {}) {
     return taskWorker.handle(raw, context);
   }
 
-  if (/^\/kb/i.test(raw)) {
-    return kbWorker.handle(raw, context);
+  if (/^\/kb/i.test(raw) || /^\/knowledge/i.test(raw)) {
+    return kbWorker.handle(raw.replace(/^\/knowledge/i, '/kb'), context);
   }
 
   if (/^\/focus$/i.test(raw)) {
