@@ -11,17 +11,18 @@ export default function useKB() {
     setLoading(true);
     setError(null);
     try {
-      const [itemsRes, clustersRes] = await Promise.all([
-        axios.get('/api/kb'),
-        axios.get('/api/kb/clusters')
-      ]);
+      const itemsRes = await axios.get('/api/kb');
       setItems(itemsRes.data);
-      setClusters(clustersRes.data);
     } catch (err) {
       setError(err.message);
-    } finally {
-      setLoading(false);
     }
+    try {
+      const clustersRes = await axios.get('/api/kb/clusters');
+      setClusters(clustersRes.data);
+    } catch {
+      // clusters are non-critical; items already loaded
+    }
+    setLoading(false);
   }, []);
 
   useEffect(() => { loadItems(); }, [loadItems]);

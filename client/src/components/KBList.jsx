@@ -113,7 +113,7 @@ export default function KBList({ items, clusters, selectedId, onSelect, searchQu
   const [clusterFilter, setClusterFilter] = useState('all');
 
   const filtered = items.filter(item => {
-    const matchesCluster = clusterFilter === 'all' || item.cluster_id === clusterFilter;
+    const matchesCluster = clusterFilter === 'all' || item.cluster === clusterFilter;
     const q = searchQuery.toLowerCase();
     const matchesSearch = !q || item.title.toLowerCase().includes(q) ||
       (item.summary || '').toLowerCase().includes(q) ||
@@ -142,8 +142,8 @@ export default function KBList({ items, clusters, selectedId, onSelect, searchQu
         {clusters.map(c => (
           <button
             key={c.id}
-            style={{ ...styles.filterBtn, ...(clusterFilter === c.id ? styles.filterBtnActive : {}) }}
-            onClick={() => setClusterFilter(c.id)}
+            style={{ ...styles.filterBtn, ...(clusterFilter === c.name ? styles.filterBtnActive : {}) }}
+            onClick={() => setClusterFilter(c.name)}
           >
             {c.name}
           </button>
@@ -158,9 +158,7 @@ export default function KBList({ items, clusters, selectedId, onSelect, searchQu
             {searchQuery ? 'no results' : 'no knowledge items'}
           </div>
         )}
-        {filtered.map(item => {
-          const cluster = clusters.find(c => c.id === item.cluster_id);
-          return (
+        {filtered.map(item => (
             <div
               key={item.id}
               style={{ ...styles.item, ...(selectedId === item.id ? styles.itemActive : {}) }}
@@ -171,14 +169,13 @@ export default function KBList({ items, clusters, selectedId, onSelect, searchQu
                 <span style={styles.itemTitle}>{item.title}</span>
               </div>
               <div style={styles.itemMeta}>
-                {cluster && <span style={styles.cluster}>{cluster.name}</span>}
+                {item.cluster && <span style={styles.cluster}>{item.cluster}</span>}
                 {(item.tags || []).slice(0, 2).map(t => (
                   <span key={t} style={styles.tag}>#{t}</span>
                 ))}
               </div>
             </div>
-          );
-        })}
+        ))}
       </div>
     </div>
   );
