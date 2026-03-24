@@ -24,7 +24,14 @@ app.use('/api/kb', kbRouter);
 app.use('/api/agent', agentRouter);
 
 // Health check
-app.get('/api/health', (_req, res) => res.json({ status: 'ok', time: new Date().toISOString() }));
+app.get('/api/health', (_req, res) => res.json({
+  status: 'ok',
+  time: new Date().toISOString(),
+  use_dummy: process.env.USE_DUMMY,
+  has_api_key: !!process.env.ANTHROPIC_API_KEY,
+  db_path: process.env.DB_PATH || 'default',
+  node_env: process.env.NODE_ENV
+}));
 
 // Serve React build in production
 if (process.env.NODE_ENV === 'production') {
