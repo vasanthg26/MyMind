@@ -1,0 +1,13 @@
+{
+  "name": "mymind",
+  "version": "1.0.0",
+  "description": "AI-powered task & knowledge management app",
+  "scripts": {
+    "build:client": "cd client && npm ci && npm run build",
+    "install:server": "cd server && npm ci",
+    "start": "node server/index.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
