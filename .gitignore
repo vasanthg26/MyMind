@@ -1,0 +1,31 @@
+# Dependencies
+node_modules/
+client/node_modules/
+server/node_modules/
+
+# SQLite database
+server/mymind.db
+server/mymind.db-shm
+server/mymind.db-wal
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Build output
+client/dist/
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Vite cache
+client/.vite/
+
+# Claude worktree metadata
+.claude/

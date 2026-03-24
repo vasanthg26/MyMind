@@ -1,0 +1,320 @@
+/* ── MyMind Global Styles ─────────────────────────────────────────────────── */
+
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap');
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ── CSS Variables — Dark Theme (default) ─────────────────────────────────── */
+
+:root {
+  --bg:           #0A0A0A;
+  --bg-surface:   #111111;
+  --bg-hover:     #1A1A1A;
+  --bg-selected:  rgba(0, 255, 65, 0.06);
+  --border:       #222222;
+  --border-accent:#00FF41;
+  --text:         #CCCCCC;
+  --text-bright:  #EEEEEE;
+  --text-muted:   #666666;
+  --text-faint:   #333333;
+  --accent:       #00FF41;
+  --accent-bg:    rgba(0, 255, 65, 0.08);
+  --priority-p1:  #FF4444;
+  --priority-p2:  #FFB000;
+  --priority-p3:  #00FF41;
+  --done:         #444444;
+  --glow:         0 0 8px rgba(0, 255, 65, 0.2);
+  --glow-strong:  0 0 12px rgba(0, 255, 65, 0.35);
+
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+/* ── CSS Variables — Light Theme ──────────────────────────────────────────── */
+
+[data-theme="light"] {
+  --bg:           #F5F5F0;
+  --bg-surface:   #FFFFFF;
+  --bg-hover:     #F0F0EB;
+  --bg-selected:  rgba(0, 100, 255, 0.06);
+  --border:       #DDDDDD;
+  --border-accent:#0064FF;
+  --text:         #222222;
+  --text-bright:  #000000;
+  --text-muted:   #777777;
+  --text-faint:   #BBBBBB;
+  --accent:       #0064FF;
+  --accent-bg:    rgba(0, 100, 255, 0.08);
+  --priority-p1:  #CC0000;
+  --priority-p2:  #CC7700;
+  --priority-p3:  #007700;
+  --done:         #AAAAAA;
+  --glow:         0 0 8px rgba(0, 100, 255, 0.15);
+  --glow-strong:  0 0 12px rgba(0, 100, 255, 0.25);
+}
+
+/* ── Base ─────────────────────────────────────────────────────────────────── */
+
+html, body, #root {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  transition: background 0.2s ease, color 0.2s ease;
+  overflow: hidden;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Typography ──────────────────────────────────────────────────────────── */
+
+* {
+  font-family: 'JetBrains Mono', 'Courier New', monospace !important;
+}
+
+h1, h2, h3, h4 {
+  font-weight: 600;
+  color: var(--text-bright);
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* ── Scrollbar ────────────────────────────────────────────────────────────── */
+
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+/* ── Priority Badges ─────────────────────────────────────────────────────── */
+
+.badge-p1 { color: var(--priority-p1); font-weight: 600; }
+.badge-p2 { color: var(--priority-p2); font-weight: 600; }
+.badge-p3 { color: var(--priority-p3); font-weight: 600; }
+.badge-done { color: var(--done); }
+
+/* ── Status Icons ─────────────────────────────────────────────────────────── */
+
+.status-active { color: var(--accent); }
+.status-todo   { color: var(--text-muted); }
+.status-done   { color: var(--done); }
+
+/* ── Blinking Cursor ─────────────────────────────────────────────────────── */
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+.cursor::after {
+  content: '▋';
+  animation: blink 1s step-end infinite;
+  color: var(--accent);
+  margin-left: 2px;
+}
+
+/* ── Accent Glow ─────────────────────────────────────────────────────────── */
+
+.accent-glow {
+  box-shadow: var(--glow);
+}
+
+.accent-glow-strong {
+  box-shadow: var(--glow-strong);
+}
+
+/* ── Divider ─────────────────────────────────────────────────────────────── */
+
+.divider {
+  color: var(--text-faint);
+  font-size: 11px;
+  letter-spacing: 0;
+  user-select: none;
+}
+
+/* ── Input / Textarea ─────────────────────────────────────────────────────── */
+
+input, textarea, select {
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: 13px;
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+
+input:focus, textarea:focus, select:focus {
+  border-color: var(--border-accent);
+  box-shadow: var(--glow);
+  animation: blink 1s step-end infinite;
+}
+
+input:focus, textarea:focus {
+  animation: none;
+  caret-color: var(--accent);
+}
+
+/* ── Buttons ─────────────────────────────────────────────────────────────── */
+
+button {
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: 12px;
+  background: transparent;
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+  padding: 4px 10px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+button:hover {
+  background: var(--bg-hover);
+  color: var(--text-bright);
+  border-color: var(--text-muted);
+}
+
+button.btn-accent {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+button.btn-accent:hover {
+  background: var(--accent-bg);
+  box-shadow: var(--glow);
+}
+
+button.btn-danger {
+  color: var(--priority-p1);
+  border-color: var(--priority-p1);
+}
+
+button.btn-danger:hover {
+  background: rgba(255, 68, 68, 0.08);
+}
+
+/* ── Tags ────────────────────────────────────────────────────────────────── */
+
+.tag {
+  color: var(--text-muted);
+  font-size: 11px;
+  display: inline-block;
+}
+
+.tag + .tag {
+  margin-left: 6px;
+}
+
+/* ── Pulse animation for daemon dot ─────────────────────────────────────── */
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.3; }
+}
+
+.pulse {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+/* ── Terminal output text ─────────────────────────────────────────────────── */
+
+.terminal-output {
+  white-space: pre;
+  font-size: 12px;
+  line-height: 1.7;
+  color: var(--text);
+}
+
+.terminal-output .line-accent {
+  color: var(--accent);
+}
+
+/* ── Fade-in ─────────────────────────────────────────────────────────────── */
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+  animation: fadeIn 0.2s ease;
+}
+
+/* ── Theme toggle switch ──────────────────────────────────────────────────── */
+
+.theme-toggle {
+  position: relative;
+  width: 44px;
+  height: 22px;
+  cursor: pointer;
+}
+
+.theme-toggle input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+  position: absolute;
+}
+
+.theme-toggle-track {
+  position: absolute;
+  inset: 0;
+  background: var(--bg-hover);
+  border: 1px solid var(--border);
+  border-radius: 11px;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.theme-toggle input:checked + .theme-toggle-track {
+  background: var(--accent-bg);
+  border-color: var(--border-accent);
+}
+
+.theme-toggle-thumb {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 14px;
+  height: 14px;
+  background: var(--text-muted);
+  border-radius: 50%;
+  transition: transform 0.2s ease, background 0.2s;
+}
+
+.theme-toggle input:checked ~ .theme-toggle-thumb {
+  transform: translateX(22px);
+  background: var(--accent);
+  box-shadow: var(--glow);
+}
