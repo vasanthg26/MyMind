@@ -34,16 +34,21 @@ async function call(taskType, model, input) {
   const systemPrompt = SYSTEM_PROMPTS[taskType] || 'You are a helpful assistant. Respond with JSON.';
   const userContent = typeof input === 'string' ? input : JSON.stringify(input);
 
-  const response = await getClient().messages.create({
-    model,
-    max_tokens: 1024,
-    system: systemPrompt,
-    messages: [{ role: 'user', content: userContent }]
-  });
+  try {
+    const response = await getClient().messages.create({
+      model,
+      max_tokens: 1024,
+      system: systemPrompt,
+      messages: [{ role: 'user', content: userContent }]
+    });
 
-  const text = response.content[0]?.text || '{}';
-  const jsonMatch = text.match(/\{[\s\S]*\}/);
-  return jsonMatch ? JSON.parse(jsonMatch[0]) : JSON.parse(text);
+    const text = response.content[0]?.text || '{}';
+    const jsonMatch = text.match(/\{[\s\S]*\}/);
+    return jsonMatch ? JSON.parse(jsonMatch[0]) : JSON.parse(text);
+  } catch (err) {
+    console.error(`[llm] ${taskType} failed:`, err.status, err.message);
+    throw err;
+  }
 }
 
 module.exports = { call };
